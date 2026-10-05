@@ -1,0 +1,36 @@
+# Base training config. Dataset + model configs are merged on top of this.
+seed: 0
+device: cuda
+amp: true
+deterministic: false
+output_root: runs
+
+data:
+  dataset_config: configs/dataset/wlasl1000.yaml
+  # (num_classes, root come from the dataset config)
+  num_frames: 64        # skeleton clip length
+  clip_frames: 32       # RGB clip length (video models override)
+  crop_size: 224
+  batch_size: 32
+  num_workers: 8
+
+train:
+  epochs: 80
+  optimizer:
+    name: sgd
+    lr: 0.1
+    momentum: 0.9
+    weight_decay: 0.0005
+    nesterov: true
+  scheduler:
+    name: cosine
+    warmup_epochs: 5
+    min_lr: 0.0
+  label_smoothing: 0.1
+  grad_accum: 1
+  clip_grad: null
+  eval_metric: top1     # checkpoint selection metric
+
+model:
+  name: stgcn
+  modality: skeleton

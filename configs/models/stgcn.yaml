@@ -1,0 +1,15 @@
+# ST-GCN (native implementation) — the reference skeleton model.
+model:
+  name: stgcn
+  modality: skeleton
+  in_channels: 3
+  args:
+    in_channels: 3
+    graph_strategy: spatial
+    edge_importance: true
+    dropout: 0.0
+
+train:
+  epochs: 80
+  optimizer: { name: sgd, lr: 0.1, momentum: 0.9, weight_decay: 0.0005, nesterov: true }
+  scheduler: { name: cosine, warmup_epochs: 5 }

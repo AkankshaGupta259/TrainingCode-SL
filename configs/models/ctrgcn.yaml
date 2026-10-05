@@ -1,0 +1,19 @@
+# CTR-GCN (Chen et al., ICCV 2021) — official repo via third_party adapter.
+# Clone: https://github.com/Uason-Chen/CTR-GCN -> third_party/CTR-GCN
+model:
+  name: ctrgcn
+  modality: skeleton
+  in_channels: 3
+  third_party: third_party/CTR-GCN
+  import: model.ctrgcn.Model
+  args:
+    num_point: 27
+    num_person: 1
+    graph: graph.sign27.Graph      # provide a 27-node graph class in the repo (see third_party/README)
+    graph_args: { labeling_mode: spatial }
+    in_channels: 3
+
+train:
+  epochs: 80
+  optimizer: { name: sgd, lr: 0.1, momentum: 0.9, weight_decay: 0.0004, nesterov: true }
+  scheduler: { name: multistep, milestones: [35, 55], gamma: 0.1, warmup_epochs: 5 }

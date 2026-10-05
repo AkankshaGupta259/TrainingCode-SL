@@ -1,0 +1,24 @@
+# MotionBERT (Zhu et al., ICCV 2023) — pretrained encoder via third_party adapter.
+# Clone: https://github.com/Walter0807/MotionBERT -> third_party/MotionBERT
+# Download the action-recognition / pretrained checkpoint and point `pretrained` at it.
+#
+# NOTE: MotionBERT is body-only (17 joints, no hands). Either feed the 17 body-compatible
+# joints (set data.num_frames and a 17-node variant) or expect it to trail hand-aware GCNs.
+model:
+  name: motionbert
+  modality: skeleton
+  in_channels: 3
+  third_party: third_party/MotionBERT
+  import: lib.model.model_action.ActionNet   # adjust to the repo's builder/class
+  num_joints: 17
+  pretrained: null                            # path to pretrained .bin/.pt checkpoint
+  args:
+    dim_feat: 512
+    dim_rep: 512
+    depth: 5
+    num_heads: 8
+
+train:
+  epochs: 60
+  optimizer: { name: adamw, lr: 0.0001, weight_decay: 0.01 }
+  scheduler: { name: cosine, warmup_epochs: 5 }

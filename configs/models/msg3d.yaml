@@ -1,0 +1,21 @@
+# MS-G3D (Liu et al., CVPR 2020) — official repo via third_party adapter.
+# Clone: https://github.com/kenziyuliu/MS-G3D -> third_party/MS-G3D
+model:
+  name: msg3d
+  modality: skeleton
+  in_channels: 3
+  third_party: third_party/MS-G3D
+  import: model.msg3d.Model
+  args:
+    num_point: 27
+    num_person: 1
+    num_gcn_scales: 8
+    num_g3d_scales: 4
+    graph: graph.sign27.AdjMatrixGraph
+    in_channels: 3
+
+train:
+  epochs: 80
+  optimizer: { name: sgd, lr: 0.05, momentum: 0.9, weight_decay: 0.0005, nesterov: true }
+  scheduler: { name: multistep, milestones: [35, 55], gamma: 0.1, warmup_epochs: 5 }
+  batch_size_note: "MS-G3D is heavier; reduce data.batch_size if VRAM-bound."

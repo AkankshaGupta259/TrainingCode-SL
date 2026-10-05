@@ -1,0 +1,18 @@
+# I3D (Carreira & Zisserman, CVPR 2017) — pytorchvideo i3d_r50, Kinetics-400 init.
+# Requires: pip install pytorchvideo
+data:
+  clip_frames: 32
+  crop_size: 224
+  batch_size: 16          # fits a 24GB 4090 with AMP; use grad_accum for larger effective batch
+
+model:
+  name: i3d
+  modality: video
+  pretrained: true
+
+train:
+  epochs: 60
+  optimizer: { name: sgd, lr: 0.01, momentum: 0.9, weight_decay: 0.0001, nesterov: true }
+  scheduler: { name: cosine, warmup_epochs: 5 }
+  grad_accum: 2           # effective batch 32
+  clip_grad: 40.0

@@ -1,0 +1,17 @@
+# WLASL1000 dataset config. Fields under `data:` are merged into the run config.
+# The subset = top-1000 glosses by sample count in WLASL_v0.3.json.
+data:
+  dataset_name: wlasl1000
+  num_classes: 1000
+  root: data/wlasl
+  metadata_json: data/wlasl/WLASL_v0.3.json
+  manifest: data/wlasl/download_manifest.csv
+  label_map: data/wlasl/label_map.json
+  splits: [train, val, test]          # per-instance split field in the metadata
+
+# Informational: consumed by scripts/download_wlasl.py via CLI flags, not the trainer.
+download:
+  num_workers: 8
+  retries: 2
+  timeout_sec: 30
+  min_samples_warn: 5

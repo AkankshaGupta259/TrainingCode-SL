@@ -1,0 +1,21 @@
+# SlowFast (Feichtenhofer et al., ICCV 2019) — pytorchvideo slowfast_r50, Kinetics-400 init.
+# Requires: pip install pytorchvideo
+# The two-pathway packing is handled inside the model wrapper (alpha subsamples the slow path).
+data:
+  clip_frames: 32
+  crop_size: 224
+  batch_size: 8           # heaviest model; raise if VRAM allows
+  num_workers: 8
+
+model:
+  name: slowfast
+  modality: video
+  pretrained: true
+  alpha: 4
+
+train:
+  epochs: 60
+  optimizer: { name: sgd, lr: 0.01, momentum: 0.9, weight_decay: 0.0001, nesterov: true }
+  scheduler: { name: cosine, warmup_epochs: 5 }
+  grad_accum: 4           # effective batch 32
+  clip_grad: 40.0

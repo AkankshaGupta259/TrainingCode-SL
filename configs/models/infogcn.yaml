@@ -1,0 +1,19 @@
+# InfoGCN (Chi et al., CVPR 2022) — official repo via third_party adapter.
+# Clone: https://github.com/stnoah1/infogcn -> third_party/infogcn
+model:
+  name: infogcn
+  modality: skeleton
+  in_channels: 3
+  third_party: third_party/infogcn
+  import: model.infogcn.Model
+  args:
+    num_class: 1000
+    num_point: 27
+    num_person: 1
+    graph: graph.sign27.Graph
+    in_channels: 3
+
+train:
+  epochs: 80
+  optimizer: { name: sgd, lr: 0.1, momentum: 0.9, weight_decay: 0.0005, nesterov: true }
+  scheduler: { name: cosine, warmup_epochs: 5 }

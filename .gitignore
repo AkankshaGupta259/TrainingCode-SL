@@ -1,0 +1,24 @@
+# Data & artifacts (anchored to repo root so src/slr/data/ is NOT ignored)
+/data/
+/runs/
+/checkpoints/
+*.mp4
+*.avi
+*.mkv
+*.pkl
+*.npy
+*.npz
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.ipynb_checkpoints/
+.venv/
+env/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
